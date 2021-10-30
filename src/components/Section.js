@@ -54,7 +54,7 @@ const SectionSubtitle = styled.p`
   letter-spacing: 0.05rem;
 `;
 
-const Section = ({ title, subtitle, type, data, id }) => {
+const Section = ({ title, subtitle, type, data, loading, id }) => {
   return (
     <SectionContainer>
       <SectionHeader>
@@ -64,7 +64,11 @@ const Section = ({ title, subtitle, type, data, id }) => {
         <SectionSubtitle>{subtitle}</SectionSubtitle>
       </SectionHeader>
 
-      {type === 'carousel' ? <Carousel data={data} id={id} /> : null}
+      {loading ? (
+        <span class="material-icons icon-loading">autorenew</span>
+      ) : type === 'carousel' ? (
+        <Carousel data={data} id={id} />
+      ) : null}
     </SectionContainer>
   );
 };

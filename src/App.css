@@ -86,3 +86,13 @@
   font-size: 1.5rem;
   padding: 0 0 1px;
 }
+
+.icon-loading {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
