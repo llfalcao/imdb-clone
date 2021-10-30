@@ -1,13 +1,38 @@
 import './App.css';
 import Header from './components/Header';
+import { useEffect, useState } from 'react';
+import Section from './components/Section';
 
-function App() {
+const App = () => {
+  const [upcoming, setUpcoming] = useState([]);
+
+  useEffect(() => {
+    async function getComingSoon() {
+      let response = await fetch(
+        'https://imdb-api.com/en/API/ComingSoon/k_cr891qpm',
+      );
+      response = await response.json();
+      setUpcoming(response.items);
+    }
+
+    getComingSoon();
+  }, []);
+
   return (
     <div className="App">
       <Header />
-      <h1>IMDc</h1>
+
+      <div>
+        <Section
+          title="Coming soon to theaters"
+          subtitle="Trailers for upcoming releases"
+          type="carousel"
+          data={upcoming}
+          id="carousel-upcoming"
+        />
+      </div>
     </div>
   );
-}
+};
 
 export default App;

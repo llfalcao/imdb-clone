@@ -1,20 +1,27 @@
 import styled from 'styled-components';
+import Carousel from './Carousel';
 
 const SectionContainer = styled.section`
   background: #121212;
   padding: 2rem 0.5rem;
   margin: 1rem 0;
+  overflow: hidden;
 `;
 
 const SectionHeader = styled.div`
   text-align: left;
-  margin: 0 1rem;
+  margin: 0 1rem 1rem;
   cursor: pointer;
+  border: 1px dashed transparent;
 
   &:hover {
-    & span {
+    & .material-icons {
       color: #f5c518;
     }
+  }
+
+  &:active {
+    border: 1px dashed #fff;
   }
 `;
 
@@ -36,8 +43,7 @@ const SectionTitle = styled.h3`
 
   & span {
     vertical-align: middle;
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 2.5rem;
   }
 `;
 
@@ -48,17 +54,17 @@ const SectionSubtitle = styled.p`
   letter-spacing: 0.05rem;
 `;
 
-const Section = ({ title, subtitle, data }) => {
+const Section = ({ title, subtitle, type, data, id }) => {
   return (
     <SectionContainer>
       <SectionHeader>
         <SectionTitle>
-          {title} <span className="material-icons">arrow_forward_ios</span>
+          {title} <span className="material-icons">keyboard_arrow_right</span>
         </SectionTitle>
         <SectionSubtitle>{subtitle}</SectionSubtitle>
       </SectionHeader>
 
-      {data}
+      {type === 'carousel' ? <Carousel data={data} id={id} /> : null}
     </SectionContainer>
   );
 };
