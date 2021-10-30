@@ -62,6 +62,7 @@ const DrawerContainer = styled.div`
   left: 0;
   top: 0;
   animation: ${colorFade} 0.3s forwards;
+  z-index: 1000;
 `;
 const slideRight = keyframes`
   from {
