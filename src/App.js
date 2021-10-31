@@ -9,7 +9,7 @@ const App = () => {
   useEffect(() => {
     function getLocalStorage() {
       const upcoming = localStorage.getItem('upcomingMovies');
-      if (upcoming !== null) {
+      if (upcoming !== null && upcoming !== '[]') {
         setUpcoming(JSON.parse(upcoming));
         return true;
       }
@@ -19,7 +19,6 @@ const App = () => {
     async function getComingSoon() {
       const isLocallyStored = getLocalStorage();
       if (isLocallyStored) return;
-
       let response = await fetch(
         'https://imdb-api.com/en/API/ComingSoon/k_cr891qpm',
       );

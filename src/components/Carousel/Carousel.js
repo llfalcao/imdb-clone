@@ -1,47 +1,5 @@
 import { useState } from 'react';
-import styled from 'styled-components';
-
-const StyledCarousel = styled.div`
-  position: relative;
-`;
-
-const Container = styled.div`
-  display: flex;
-  transition: 0.5s ease-in-out;
-`;
-
-const Arrow = styled.button`
-  position: absolute;
-  top: 25%;
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  cursor: pointer;
-  padding: 0.5rem 0;
-  border: 1px solid rgb(255, 255, 255, 0.7);
-  border-radius: 0.25rem;
-
-  &:hover {
-    color: #f5c518;
-  }
-
-  & .material-icons {
-    font-size: 3.5rem;
-  }
-`;
-
-const ArrowLeft = styled(Arrow)`
-  left: 0;
-`;
-
-const ArrowRight = styled(Arrow)`
-  right: 0;
-`;
-
-const LoadingError = styled.p`
-  padding: 1rem;
-  font-weight: 600;
-  font-size: 1.5rem;
-`;
+import * as S from './styles';
 
 const Carousel = ({ id, data }) => {
   const [pos, setPos] = useState(0);
@@ -71,10 +29,10 @@ const Carousel = ({ id, data }) => {
   }
 
   return (
-    <StyledCarousel>
+    <S.Carousel>
       {data !== undefined && data.length > 0 ? (
         <>
-          <Container id={id} style={{ transform: `translateX(${pos}px)` }}>
+          <S.Container id={id} style={{ transform: `translateX(${pos}px)` }}>
             {data.map((movie) => (
               <div className="movie" key={movie.id}>
                 <div className="movie__cover">
@@ -101,26 +59,26 @@ const Carousel = ({ id, data }) => {
                 </button>
               </div>
             ))}
-          </Container>
+          </S.Container>
 
           {pos < 0 ? (
-            <ArrowLeft onClick={() => slide('left')}>
+            <S.ArrowLeft onClick={() => slide('left')}>
               <span className="material-icons material-icons-outlined">
                 keyboard_arrow_left
               </span>
-            </ArrowLeft>
+            </S.ArrowLeft>
           ) : null}
 
-          <ArrowRight onClick={() => slide('right')}>
+          <S.ArrowRight onClick={() => slide('right')}>
             <span className="material-icons material-icons-outlined">
               keyboard_arrow_right{' '}
             </span>
-          </ArrowRight>
+          </S.ArrowRight>
         </>
       ) : (
-        <LoadingError>Something went wrong.</LoadingError>
+        <S.LoadingError>Something went wrong.</S.LoadingError>
       )}
-    </StyledCarousel>
+    </S.Carousel>
   );
 };
 
