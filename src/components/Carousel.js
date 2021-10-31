@@ -37,6 +37,12 @@ const ArrowRight = styled(Arrow)`
   right: 0;
 `;
 
+const LoadingError = styled.p`
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+`;
+
 const Carousel = ({ id, data }) => {
   const [pos, setPos] = useState(0);
 
@@ -66,9 +72,10 @@ const Carousel = ({ id, data }) => {
 
   return (
     <StyledCarousel>
-      <Container id={id} style={{ transform: `translateX(${pos}px)` }}>
-        {data.length > 0
-          ? data.map((movie) => (
+      {data !== undefined && data.length > 0 ? (
+        <>
+          <Container id={id} style={{ transform: `translateX(${pos}px)` }}>
+            {data.map((movie) => (
               <div className="movie" key={movie.id}>
                 <div className="movie__cover">
                   <img src={movie.image} alt={movie.title} />
@@ -93,23 +100,26 @@ const Carousel = ({ id, data }) => {
                   Watchlist
                 </button>
               </div>
-            ))
-          : null}
-      </Container>
+            ))}
+          </Container>
 
-      {pos < 0 ? (
-        <ArrowLeft onClick={() => slide('left')}>
-          <span className="material-icons material-icons-outlined">
-            keyboard_arrow_left
-          </span>
-        </ArrowLeft>
-      ) : null}
+          {pos < 0 ? (
+            <ArrowLeft onClick={() => slide('left')}>
+              <span className="material-icons material-icons-outlined">
+                keyboard_arrow_left
+              </span>
+            </ArrowLeft>
+          ) : null}
 
-      <ArrowRight onClick={() => slide('right')}>
-        <span className="material-icons material-icons-outlined">
-          keyboard_arrow_right
-        </span>
-      </ArrowRight>
+          <ArrowRight onClick={() => slide('right')}>
+            <span className="material-icons material-icons-outlined">
+              keyboard_arrow_right{' '}
+            </span>
+          </ArrowRight>
+        </>
+      ) : (
+        <LoadingError>Something went wrong.</LoadingError>
+      )}
     </StyledCarousel>
   );
 };

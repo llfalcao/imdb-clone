@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Section from './components/Section';
 
 const App = () => {
-  const [upcoming, setUpcoming] = useState({ data: [], loading: true });
+  const [upcoming, setUpcoming] = useState({ loading: true });
 
   useEffect(() => {
     function getLocalStorage() {
