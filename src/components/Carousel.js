@@ -37,8 +37,18 @@ const ArrowRight = styled(Arrow)`
   right: 0;
 `;
 
-const Carousel = ({ data, id }) => {
+const Carousel = ({ id, data }) => {
   const [pos, setPos] = useState(0);
+
+  function addToWatchlist(movie) {
+    let watchlist = JSON.parse(localStorage.getItem('watchlist'));
+    if (watchlist === null) {
+      watchlist = [movie];
+    } else {
+      watchlist.push(movie);
+    }
+    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+  }
 
   function slide(direction) {
     const windowWidth = window.innerWidth;
@@ -75,7 +85,10 @@ const Carousel = ({ data, id }) => {
                 <span className="movie__title" title={movie.title}>
                   {movie.title}
                 </span>
-                <button className="btn-watchlist">
+                <button
+                  className="btn-watchlist"
+                  onClick={() => addToWatchlist(movie)}
+                >
                   <span className="material-icons icon-watchlist">add</span>
                   Watchlist
                 </button>

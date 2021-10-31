@@ -7,7 +7,19 @@ const App = () => {
   const [upcoming, setUpcoming] = useState({ data: [], loading: true });
 
   useEffect(() => {
+    function getLocalStorage() {
+      const upcoming = localStorage.getItem('upcomingMovies');
+      if (upcoming !== null) {
+        setUpcoming(JSON.parse(upcoming));
+        return true;
+      }
+      return false;
+    }
+
     async function getComingSoon() {
+      const isLocallyStored = getLocalStorage();
+      if (isLocallyStored) return;
+
       let response = await fetch(
         'https://imdb-api.com/en/API/ComingSoon/k_cr891qpm',
       );
@@ -17,6 +29,7 @@ const App = () => {
         data: response.items,
         loading: false,
       }));
+      localStorage.setItem('upcomingMovies', JSON.stringify(response.items));
     }
 
     getComingSoon();
@@ -28,12 +41,12 @@ const App = () => {
 
       <div>
         <Section
+          id="carousel-upcoming"
           title="Coming soon to theaters"
           subtitle="Trailers for upcoming releases"
           type="carousel"
           data={upcoming.data}
           loading={upcoming.loading}
-          id="carousel-upcoming"
         />
       </div>
     </div>
