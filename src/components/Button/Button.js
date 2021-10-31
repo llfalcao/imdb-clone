@@ -1,17 +1,15 @@
 import * as S from './styles';
 
-const Button = ({ type, variant, icon, value, onClick, customClass }) => {
-  let btnClass = customClass || '';
-
+const Button = ({ type, variant, icon, value, onClick, className }) => {
   if (variant === 'text')
     return (
-      <S.TextBtn type={type} className={btnClass} onClick={onClick}>
+      <S.TextBtn type={type} className={className} onClick={onClick}>
         {value}
       </S.TextBtn>
     );
 
   return (
-    <S.IconBtn type={type} className={btnClass} onClick={onClick}>
+    <S.IconBtn type={type} className={className} onClick={onClick}>
       <span className="material-icons">{icon}</span>
     </S.IconBtn>
   );

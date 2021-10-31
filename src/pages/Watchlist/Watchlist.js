@@ -40,7 +40,7 @@ const Watchlist = () => {
   }, []);
 
   return (
-    <div>
+    <S.Container>
       <Header />
       {watchlist.length > 0 ? (
         watchlist.map((movie) => (
@@ -65,7 +65,7 @@ const Watchlist = () => {
           </Link>
         </div>
       )}
-    </div>
+    </S.Container>
   );
 };
 
