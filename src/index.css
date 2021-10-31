@@ -26,3 +26,9 @@ button {
   border: none;
   outline: none;
 }
+
+a,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}

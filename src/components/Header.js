@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
 const StyledHeader = styled.header`
@@ -43,7 +44,7 @@ const Icon = styled(Button)`
   aspect-ratio: 1;
   border-radius: 100%;
 `;
-const SignIn = styled(Button)`
+const TextButton = styled(Button)`
   color: #fff;
   font-weight: 600;
   min-height: 3rem;
@@ -129,7 +130,12 @@ const Header = () => {
       <Icon>
         <span className="material-icons">search</span>
       </Icon>
-      <SignIn>Sign In</SignIn>
+
+      <Link to="/watchlist">
+        <TextButton>Watchlist</TextButton>
+      </Link>
+
+      <TextButton>Sign In</TextButton>
     </StyledHeader>
   );
 };
