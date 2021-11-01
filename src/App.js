@@ -10,7 +10,7 @@ const App = () => {
     function getLocalStorage() {
       const upcoming = localStorage.getItem('upcomingMovies');
       if (upcoming !== null && upcoming !== '[]') {
-        setUpcoming(JSON.parse(upcoming));
+        setUpcoming({ data: JSON.parse(upcoming), loading: false });
         return true;
       }
       return false;
@@ -22,12 +22,9 @@ const App = () => {
       let response = await fetch(
         'https://imdb-api.com/en/API/ComingSoon/k_cr891qpm',
       );
+      console.log(1);
       response = await response.json();
-      setUpcoming((upcoming) => ({
-        ...upcoming,
-        data: response.items,
-        loading: false,
-      }));
+      setUpcoming({ data: response.items, loading: false });
       localStorage.setItem('upcomingMovies', JSON.stringify(response.items));
     }
 

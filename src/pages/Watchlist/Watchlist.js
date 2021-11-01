@@ -24,6 +24,7 @@ const Watchlist = () => {
       let response = await fetch(
         `https://imdb-api.com/en/API/SearchMovie/k_cr891qpm/${id}`,
       );
+
       response = await response.json();
 
       setWatchlist((watchlist) => {
@@ -39,32 +40,45 @@ const Watchlist = () => {
     movies.map((id) => getMovie(id));
   }, []);
 
+  function removeFromWatchlist(id) {
+    const index = watchlist.findIndex((movie) => movie.id === id);
+
+    setWatchlist((watchlist) => {
+      const updated = [...watchlist];
+      updated.splice(index, 1);
+      localStorage.setItem('watchlist', JSON.stringify(updated));
+      return updated;
+    });
+  }
+
   return (
     <S.Container>
       <Header />
-      {watchlist.length > 0 ? (
-        watchlist.map((movie) => (
-          <div className="movie" key={movie.id}>
-            <div className="movie__cover">
-              <img src={movie.image} alt={movie.title} />
+      <S.MovieContainer>
+        {watchlist.length > 0 ? (
+          watchlist.map((movie) => (
+            <div className="movie" key={movie.id}>
+              <div className="movie__cover">
+                <img src={movie.image} alt={movie.title} />
+              </div>
+              <span className="movie__title" title={movie.title}>
+                {movie.title}
+              </span>
+              <button className="btn-watchlist">Mark as watched</button>
+              <S.Remove onClick={() => removeFromWatchlist(movie.id)}>
+                <Button type="button" variant="icon" icon="highlight_off" />
+              </S.Remove>
             </div>
-            <span className="movie__title" title={movie.title}>
-              {movie.title}
-            </span>
-            <button className="btn-watchlist">
-              <span className="material-icons icon-watchlist">add</span>
-              Mark as watched
-            </button>
+          ))
+        ) : (
+          <div>
+            <S.EmptyWatchlist>Your watchlist is empty.</S.EmptyWatchlist>
+            <Link to="/">
+              <Button type="button" variant="text" value="Return Home" />
+            </Link>
           </div>
-        ))
-      ) : (
-        <div>
-          <S.EmptyWatchlist>Your watchlist is empty.</S.EmptyWatchlist>
-          <Link to="/">
-            <Button type="button" variant="text" value="Return Home" />
-          </Link>
-        </div>
-      )}
+        )}
+      </S.MovieContainer>
     </S.Container>
   );
 };

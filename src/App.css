@@ -3,18 +3,20 @@
 }
 
 .movie {
+  position: relative;
   background: #1a1a1a;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
     0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
   margin: 0 0.5rem;
   min-width: 150px;
   border-radius: 0.25rem;
-  overflow: hidden;
 }
 
 .movie__cover {
   margin-bottom: 1rem;
   height: 220px;
+  overflow: hidden;
+  border-radius: 0.25rem 0.25rem 0 0;
 }
 
 .movie__cover img {
@@ -76,10 +78,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  width: 80%;
 }
 
 .btn-watchlist:hover {
   background: #3d3d3d;
+}
+
+.btn-watchlist:active {
+  background: #5e5e5e;
+}
+
+.btn-watchlist:focus {
+  border: 1px dashed #fff;
 }
 
 .icon-watchlist {
