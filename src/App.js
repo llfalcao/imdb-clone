@@ -22,9 +22,16 @@ const App = () => {
       let response = await fetch(
         'https://imdb-api.com/en/API/ComingSoon/k_cr891qpm',
       );
-      console.log(1);
       response = await response.json();
-      setUpcoming({ data: response.items, loading: false });
+      const data = await response.items.map((item) => {
+        if (item.image.includes('amazon')) {
+          item.image =
+            item.image.substring(0, item.image.indexOf('._')) +
+            '._V1_UX256.jpg';
+        }
+        return item;
+      });
+      setUpcoming({ data, loading: false });
       localStorage.setItem('upcomingMovies', JSON.stringify(response.items));
     }
 
