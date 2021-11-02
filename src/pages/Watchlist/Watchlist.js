@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/Header';
 import Button from '../../components/Button';
 import * as S from './styles';
 
@@ -18,15 +17,17 @@ const Watchlist = () => {
     }
 
     async function getMovie(id) {
+      // TODO: load IDs from firebase;
+      // search in ls;
+      // if not there, fetch
+
       const isLocallyStored = getLocalStorage();
       if (isLocallyStored) return;
 
       let response = await fetch(
         `https://imdb-api.com/en/API/SearchMovie/k_cr891qpm/${id}`,
       );
-
       response = await response.json();
-
       setWatchlist((watchlist) => {
         if (response === null) return [];
         const updated = [...watchlist];
@@ -53,7 +54,6 @@ const Watchlist = () => {
 
   return (
     <S.Container>
-      <Header />
       <S.MovieContainer>
         {watchlist.length > 0 ? (
           watchlist.map((movie) => (
