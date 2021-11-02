@@ -5,7 +5,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import firebaseConfig from './firebase-config';
 
 const app = initializeApp(firebaseConfig);
@@ -18,13 +18,24 @@ async function storeUser(uid) {
   });
 }
 
+// Retrieve current watchlist and add the new one
+async function storeMovie(movieId) {
+  const user = getAuth().currentUser;
+  if (user === null) return;
+  const usersRef = doc(db, 'users', user.uid);
+  const docSnap = await getDoc(usersRef);
+  if (docSnap.exists()) {
+    const watchlist = docSnap.data().watchlist;
+    setDoc(usersRef, { watchlist: watchlist.concat(movieId) });
+  }
+}
+
 // Signs-in as guest
 function signInAsGuest() {
   const auth = getAuth();
   signInAnonymously(auth)
     .then(() =>
       onAuthStateChanged(auth, (user) => {
-        console.log(user);
         if (user) {
           const uid = user.uid;
           storeUser(uid);
@@ -50,4 +61,4 @@ async function storeWatchlist(uid, watchlist) {
   });
 }
 
-export { signInAsGuest, signOutUser, storeWatchlist };
+export { signInAsGuest, signOutUser, storeWatchlist, storeMovie };

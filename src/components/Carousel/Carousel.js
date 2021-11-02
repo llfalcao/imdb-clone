@@ -1,17 +1,13 @@
 import { useState } from 'react';
+import { storeMovie } from '../../firebase';
 import * as S from './styles';
 
 const Carousel = ({ id, data }) => {
   const [pos, setPos] = useState(0);
 
+  // Store it on firebase
   function addToWatchlist(movie) {
-    let watchlist = JSON.parse(localStorage.getItem('watchlist'));
-    if (watchlist === null) {
-      watchlist = [movie];
-    } else {
-      watchlist.push(movie);
-    }
-    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+    storeMovie(movie.id);
   }
 
   function slide(direction) {
