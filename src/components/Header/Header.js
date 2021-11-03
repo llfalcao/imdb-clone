@@ -40,13 +40,13 @@ const Header = ({ user, onSignIn, onSignOut }) => {
 
       {user.didAuth ? (
         <Link to="/" onClick={onSignOut}>
-          <Button type="button" variant="text" value="Sign Out" />
+          <Button type="button" variant="text" value="Sign out" />
         </Link>
       ) : (
         <Button
           type="button"
           variant="text"
-          value="Sign In"
+          value="Sign in"
           onClick={onSignIn}
         />
       )}
