@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { storeMovie } from '../../firebase';
+import { getAuth } from 'firebase/auth';
 import * as S from './styles';
 
 const Carousel = ({ id, data }) => {
   const [pos, setPos] = useState(0);
 
-  // Store it on firebase
   function addToWatchlist(movie) {
-    storeMovie(movie.id);
+    const user = getAuth().currentUser;
+    if (user === undefined || user === null) return;
+    storeMovie(user, movie.id);
   }
 
   function slide(direction) {

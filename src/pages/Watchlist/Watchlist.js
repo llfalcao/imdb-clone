@@ -1,55 +1,49 @@
+import { getAuth } from '@firebase/auth';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
+import { getWatchlist, removeMovie } from '../../firebase';
 import * as S from './styles';
 
 const Watchlist = () => {
   const [watchlist, setWatchlist] = useState([]);
 
   useEffect(() => {
-    function getLocalStorage() {
-      const watchlist = localStorage.watchlist;
-      if (watchlist !== null) {
-        setWatchlist(JSON.parse(watchlist));
-        return true;
-      }
-      return false;
-    }
+    const user = getAuth().currentUser;
+    if (user === undefined || user === null) return;
 
-    async function getMovie(id) {
-      // TODO: load IDs from firebase;
-      // search in ls;
-      // if not there, fetch
-
-      const isLocallyStored = getLocalStorage();
-      if (isLocallyStored) return;
-
+    async function fetchAPI(id) {
       let response = await fetch(
         `https://imdb-api.com/en/API/SearchMovie/k_cr891qpm/${id}`,
       );
       response = await response.json();
-      setWatchlist((watchlist) => {
-        if (response === null) return [];
-        const updated = [...watchlist];
-        updated.push(response.results[0]);
-        return updated;
-      });
+      return response;
     }
 
-    const movies = JSON.parse(localStorage.getItem('watchlist'));
-    if (movies == null) return;
-    movies.map((id) => getMovie(id));
+    getWatchlist(user).then((items) => {
+      const ls = JSON.parse(localStorage.getItem('upcomingMovies'));
+      if (ls) {
+        items.forEach((id) => {
+          const movie = ls.find((item) => item.id === id);
+          setWatchlist((watchlist) => watchlist.concat(movie));
+        });
+      } else {
+        items.forEach((id) => {
+          fetchAPI(id)
+            .then((data) =>
+              setWatchlist((watchlist) => watchlist.concat(data.results[0])),
+            )
+            .catch((error) => console.error(error));
+        });
+      }
+    });
   }, []);
 
   function removeFromWatchlist(id) {
-    const index = watchlist.findIndex((movie) => movie.id === id);
-
-    setWatchlist((watchlist) => {
-      const updated = [...watchlist];
-      updated.splice(index, 1);
-      localStorage.setItem('watchlist', JSON.stringify(updated));
-      return updated;
-    });
+    const user = getAuth().currentUser;
+    if (user === undefined || user === null) return;
+    removeMovie(user, id); // Remove it from Firebase
+    setWatchlist((watchlist) => watchlist.filter((movie) => movie.id !== id));
   }
 
   return (

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import App from './App';
 import Header from './components/Header';
@@ -7,6 +7,12 @@ import { signInAsGuest, signOutUser } from './firebase';
 
 const Routes = () => {
   const [user, setUser] = useState({ didAuth: false });
+
+  useEffect(() => {
+    if (localStorage.didAuth) {
+      setUser({ didAuth: true });
+    }
+  }, []);
 
   function onSignIn() {
     signInAsGuest();

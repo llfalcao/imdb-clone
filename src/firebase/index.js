@@ -1,57 +1,55 @@
 import { initializeApp } from 'firebase/app';
-import {
-  getAuth,
-  signInAnonymously,
-  onAuthStateChanged,
-  signOut,
-} from 'firebase/auth';
+import { getAuth, signInAnonymously, signOut } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import firebaseConfig from './firebase-config';
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Adds a new user to the database
-async function storeUser(uid) {
-  setDoc(doc(db, 'users', uid), {
-    watchlist: [],
-  });
+// Loads watchlist
+async function getWatchlist(user) {
+  let docSnap = await getDoc(doc(db, 'users', user.uid));
+  if (docSnap.data() === undefined) return [];
+  return docSnap.data().watchlist;
 }
 
-// Retrieve current watchlist and add the new one
-async function storeMovie(movieId) {
-  const user = getAuth().currentUser;
-  if (user === null) return;
-  const usersRef = doc(db, 'users', user.uid);
-  const docSnap = await getDoc(usersRef);
-  if (docSnap.exists()) {
-    const watchlist = docSnap.data().watchlist;
-    setDoc(usersRef, { watchlist: watchlist.concat(movieId) });
+// Retrieves current watchlist and add the new one
+async function storeMovie(user, id) {
+  const watchlist = await getWatchlist(user);
+  const found = watchlist.some((movie) => movie === id);
+  if (!found) {
+    setDoc(doc(db, 'users', user.uid), {
+      watchlist: watchlist.concat(id),
+    });
+  } else {
+    console.error('Movie already added to the watchlist.');
+  }
+}
+
+// Removes movie from the watchlist
+async function removeMovie(user, id) {
+  let watchlist = await getWatchlist(user);
+  const prev = watchlist.length;
+  watchlist = watchlist.filter((item) => item !== id);
+
+  if (watchlist.length < prev) {
+    setDoc(doc(db, 'users', user.uid), {
+      watchlist,
+    });
+  } else {
+    console.error('Movie not found.');
   }
 }
 
 // Signs-in as guest
 function signInAsGuest() {
   const auth = getAuth();
-  signInAnonymously(auth)
-    .then(() =>
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          const uid = user.uid;
-          storeUser(uid);
-        }
-      }),
-    )
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
+  signInAnonymously(auth);
 }
 
 // Signs-out of Firebase
 function signOutUser() {
-  signOut(getAuth());
+  signOut(getAuth()).then(() => localStorage.removeItem('auth'));
 }
 
 // Saves the user watchlist
@@ -61,4 +59,11 @@ async function storeWatchlist(uid, watchlist) {
   });
 }
 
-export { signInAsGuest, signOutUser, storeWatchlist, storeMovie };
+export {
+  signInAsGuest,
+  signOutUser,
+  storeWatchlist,
+  getWatchlist,
+  storeMovie,
+  removeMovie,
+};
