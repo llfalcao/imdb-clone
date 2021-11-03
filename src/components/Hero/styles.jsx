@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  @media (min-width: 1360px) {
+    max-width: 1360px;
+  }
+`;
+
 export const HeroContainer = styled.div`
   position: relative;
-  background: #000 !;
+  background: #000;
   margin: 1rem 0 0;
   padding: 0rem 3rem 3rem;
   max-width: 850px;

@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 
-export const Container = styled.section`
+export const Wrapper = styled.div`
   background: #121212;
+`;
+
+export const Container = styled.section`
   padding: 2rem 2rem;
-  margin: 1rem 0 0;
+  margin: 1rem auto 0;
   overflow: hidden;
+
+  @media (min-width: 1360px) {
+    max-width: 1360px;
+  }
 `;
 
 export const Header = styled.div`

@@ -16,13 +16,15 @@ const Hero = () => {
   });
 
   return (
-    <S.HeroContainer>
-      <S.Image src={hero[slide].image} alt={hero[slide].title} />
-      <S.Legend>
-        <S.Title>{hero[slide].title}</S.Title>
-        <S.Subtitle>{hero[slide].subtitle}</S.Subtitle>
-      </S.Legend>
-    </S.HeroContainer>
+    <S.Wrapper>
+      <S.HeroContainer>
+        <S.Image src={hero[slide].image} alt={hero[slide].title} />
+        <S.Legend>
+          <S.Title>{hero[slide].title}</S.Title>
+          <S.Subtitle>{hero[slide].subtitle}</S.Subtitle>
+        </S.Legend>
+      </S.HeroContainer>
+    </S.Wrapper>
   );
 };
 
