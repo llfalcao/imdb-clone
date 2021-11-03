@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.section`
   background: #121212;
-  padding: 2rem 0.5rem;
-  margin: 1rem 0;
+  padding: 2rem 2rem;
+  margin: 1rem 0 0;
   overflow: hidden;
 `;
 

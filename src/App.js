@@ -1,6 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import Section from './components/Section';
+import Hero from './components/Hero'
 
 const App = () => {
   const [upcoming, setUpcoming] = useState({ loading: true });
@@ -39,6 +40,8 @@ const App = () => {
 
   return (
     <div className="App">
+      <Hero />
+
       <div>
         <Section
           id="carousel-upcoming"
