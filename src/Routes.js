@@ -28,8 +28,8 @@ const Routes = () => {
     <Router>
       <Header user={user} onSignIn={onSignIn} onSignOut={onSignOut} />
       <Switch>
-        <Route exact path="/" component={App}></Route>
-        <Route path="/watchlist" component={Watchlist}></Route>
+        <Route exact path="/imdb-clone" component={App}></Route>
+        <Route path="/imdb-clone/watchlist" component={Watchlist}></Route>
       </Switch>
     </Router>
   );

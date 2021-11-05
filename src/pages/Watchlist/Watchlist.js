@@ -67,7 +67,7 @@ const Watchlist = () => {
         ) : (
           <div>
             <S.EmptyWatchlist>Your watchlist is empty.</S.EmptyWatchlist>
-            <Link to="/">
+            <Link to="/imdb-clone">
               <Button type="button" variant="text" value="Return Home" />
             </Link>
           </div>
