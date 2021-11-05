@@ -7,14 +7,14 @@ const SignIn = (props) => {
   console.log(props);
   const history = useHistory([]);
 
-  function signInAsGuest() {
+  function signInGuest() {
     signInAsGuest();
     localStorage.setItem('didAuth', 'true');
     history.replace('/imdb-clone');
   }
 
-  async function signInWithGoogle() {
-    var provider = new GoogleAuthProvider();
+  async function signInGoogle() {
+    const provider = new GoogleAuthProvider();
     await signInWithPopup(getAuth(), provider);
   }
 
@@ -34,13 +34,13 @@ const SignIn = (props) => {
             type="button"
             variant="text"
             value="Sign in with Google"
-            onClick={signInWithGoogle}
+            onClick={signInGoogle}
           />
           <S.SignInBtn
             type="button"
             variant="text"
             value="Sign in as Guest"
-            onClick={signInAsGuest}
+            onClick={signInGuest}
           />
         </S.AltSignIn>
       </S.Form>
