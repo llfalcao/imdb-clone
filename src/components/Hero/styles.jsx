@@ -3,10 +3,14 @@ import Button from '../Button';
 
 export const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 2rem;
   flex-wrap: wrap;
-  padding: 1rem 2.5rem;
+  padding: 1rem;
+
+  @media (min-width: 1000px) {
+    flex-wrap: nowrap;
+  }
 
   @media (min-width: 1360px) {
     max-width: 1360px;
@@ -16,20 +20,29 @@ export const Wrapper = styled.div`
 export const HeroContainer = styled.div`
   position: relative;
   background: #000;
-  height: auto;
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 16 / 9;
   padding: 0rem 0 3rem;
   text-align: left;
   flex-grow: 1;
 `;
 
 export const Image = styled.div`
-  height: auto;
+  overflow: hidden;
 
   & img {
     width: 100%;
-    object-fit: contain;
-    object-position: top;
-    mask-image: linear-gradient(to top, transparent, black 70%);
+    height: auto;
+    object-fit: cover;
+    object-position: bottom;
+    mask-image: linear-gradient(
+      to top,
+      transparent,
+      transparent 10%,
+      black 90%,
+      black 100%
+    );
   }
 `;
 
@@ -51,7 +64,7 @@ export const Cover = styled.div`
   }
 
   @media (min-width: 1360px) {
-    width: 180px;
+    width: 150px;
     left: 1.5rem;
   }
 `;
@@ -72,7 +85,7 @@ export const Headline = styled.div`
   }
 
   @media (min-width: 1280px) {
-    left: 15rem;
+    left: 12rem;
     margin: 0 4rem 0.5rem 1rem;
   }
 `;
@@ -117,7 +130,7 @@ export const Title = styled.h2`
   }
 
   @media (min-width: 1360px) {
-    font-size: 2.3rem;
+    font-size: 2rem;
   }
 `;
 
@@ -131,7 +144,7 @@ export const Subtitle = styled.h3`
   }
 
   @media (min-width: 1360px) {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 `;
 

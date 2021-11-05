@@ -5,19 +5,26 @@ import Hero from './components/Hero';
 import { getUpcomingMovies, getMoviesInTheaters } from './web';
 
 const App = () => {
-  const [upcoming, setUpcoming] = useState({ loading: true });
-  const [inTheaters, setInTheaters] = useState({ loading: true });
+  const [upcoming, setUpcoming] = useState({ data: [], loading: true });
+  const [inTheaters, setInTheaters] = useState({ data: [], loading: true });
 
   useEffect(() => {
     const ls = JSON.parse(localStorage.getItem('movies'));
     if (ls !== null && ls.length > 0) {
-      setUpcoming({
-        data: ls.filter((movie) => !movie.releaseState.includes('Opening')),
-        loading: false,
-      });
-      setInTheaters({
-        data: ls.filter((movie) => movie.releaseState.includes('Opening')),
-        loading: false,
+      ls.forEach((movie) => {
+        if (movie.releaseState.includes('Opening')) {
+          setInTheaters((prevState) => {
+            const { data } = prevState;
+            const newData = data.concat(movie);
+            return { ...prevState, data: newData, loading: false };
+          });
+        } else {
+          setUpcoming((prevState) => {
+            const { data } = prevState;
+            const newData = data.concat(movie);
+            return { ...prevState, data: newData, loading: false };
+          });
+        }
       });
       return;
     }
