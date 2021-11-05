@@ -21,6 +21,7 @@ const App = () => {
       });
       return;
     }
+
     getUpcomingMovies().then((data) => {
       setUpcoming({ data, loading: false });
       const ls = JSON.parse(localStorage.getItem('movies'));

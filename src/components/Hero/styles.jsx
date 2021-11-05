@@ -2,6 +2,12 @@ import styled from 'styled-components';
 import Button from '../Button';
 
 export const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 1rem 2.5rem;
+
   @media (min-width: 1360px) {
     max-width: 1360px;
   }
@@ -10,11 +16,10 @@ export const Wrapper = styled.div`
 export const HeroContainer = styled.div`
   position: relative;
   background: #000;
-  margin: 1rem 0 0;
-  max-width: 850px;
   height: auto;
-  padding: 0rem 3rem 3rem;
+  padding: 0rem 0 3rem;
   text-align: left;
+  flex-grow: 1;
 `;
 
 export const Image = styled.div`
@@ -28,9 +33,32 @@ export const Image = styled.div`
   }
 `;
 
+export const Cover = styled.div`
+  position: absolute;
+  left: 1rem;
+  bottom: 0.5rem;
+  width: 70px;
+  height: auto;
+
+  & img {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 500px) {
+    width: 120px;
+    left: 1.5rem;
+  }
+
+  @media (min-width: 1360px) {
+    width: 180px;
+    left: 1.5rem;
+  }
+`;
+
 export const Headline = styled.div`
   position: absolute;
-  left: 9rem;
+  left: 6rem;
   bottom: 0.3rem;
   margin: 0 3rem 0.5rem 1rem;
   display: flex;
@@ -40,11 +68,11 @@ export const Headline = styled.div`
 
   @media (min-width: 500px) {
     flex-direction: row;
-    left: 14rem;
+    left: 11rem;
   }
 
   @media (min-width: 1280px) {
-    left: 19rem;
+    left: 15rem;
     margin: 0 4rem 0.5rem 1rem;
   }
 `;
@@ -80,30 +108,6 @@ export const PlayBtn = styled(Button)`
   }
 `;
 
-export const Cover = styled.div`
-  position: absolute;
-  left: 3.5rem;
-  bottom: 0.5rem;
-  width: 70px;
-  height: auto;
-
-  & img {
-    width: 100%;
-    height: auto;
-  }
-
-  @media (min-width: 500px) {
-    width: 120px;
-    left: 4.5rem;
-  }
-
-  @media (min-width: 1360px) {
-    width: 180px;
-  }
-`;
-
-export const Legend = styled.div``;
-
 export const Title = styled.h2`
   font-size: 1.2rem;
   font-weight: 400;
@@ -128,5 +132,45 @@ export const Subtitle = styled.h3`
 
   @media (min-width: 1360px) {
     font-size: 1.7rem;
+  }
+`;
+
+export const VerticalNews = styled.div`
+  display: inline-block;
+  text-align: left;
+  margin: 1rem 2rem 0 0;
+
+  & span {
+    padding: 1rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #f5c518;
+  }
+
+  & img {
+    width: 75px;
+    vertical-align: top;
+    margin: 0;
+  }
+`;
+
+export const NewsBlock = styled.div`
+  margin: 1rem 0;
+  cursor: pointer;
+  display: flex;
+`;
+
+export const Legend = styled.div`
+  padding: 1rem;
+  display: inline-block;
+  margin: 0;
+
+  & p {
+    display: block;
+    font-size: 1.2rem;
+  }
+
+  & p:last-child {
+    opacity: 0.7;
   }
 `;
