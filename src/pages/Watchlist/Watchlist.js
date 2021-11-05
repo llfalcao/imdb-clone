@@ -21,8 +21,8 @@ const Watchlist = () => {
     }
 
     getWatchlist(user).then((items) => {
-      const ls = JSON.parse(localStorage.getItem('upcomingMovies'));
-      if (ls) {
+      const ls = JSON.parse(localStorage.getItem('movies'));
+      if (ls && ls.length > 0) {
         items.forEach((id) => {
           const movie = ls.find((item) => item.id === id);
           setWatchlist((watchlist) => watchlist.concat(movie));

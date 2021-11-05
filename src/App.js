@@ -2,40 +2,53 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import Section from './components/Section';
 import Hero from './components/Hero';
+import { getUpcomingMovies, getMoviesInTheaters } from './web';
 
 const App = () => {
   const [upcoming, setUpcoming] = useState({ loading: true });
+  const [inTheaters, setInTheaters] = useState({ loading: true });
 
   useEffect(() => {
-    function getLocalStorage() {
-      const upcoming = localStorage.getItem('upcomingMovies');
-      if (upcoming !== null && upcoming !== '[]') {
-        setUpcoming({ data: JSON.parse(upcoming), loading: false });
-        return true;
-      }
-      return false;
-    }
-
-    async function getComingSoon() {
-      const isLocallyStored = getLocalStorage();
-      if (isLocallyStored) return;
-      let response = await fetch(
-        'https://imdb-api.com/en/API/ComingSoon/k_cr891qpm',
-      );
-      response = await response.json();
-      const data = await response.items.map((item) => {
-        if (item.image.includes('amazon')) {
-          item.image =
-            item.image.substring(0, item.image.indexOf('._')) +
-            '._V1_UX256.jpg';
-        }
-        return item;
+    const ls = JSON.parse(localStorage.getItem('movies'));
+    if (ls !== null && ls.length > 0) {
+      setUpcoming({
+        data: ls.filter((movie) => !movie.releaseState.includes('Opening')),
+        loading: false,
       });
-      setUpcoming({ data, loading: false });
-      localStorage.setItem('upcomingMovies', JSON.stringify(response.items));
+      setInTheaters({
+        data: ls.filter((movie) => movie.releaseState.includes('Opening')),
+        loading: false,
+      });
+      return;
     }
+    getUpcomingMovies().then((data) => {
+      setUpcoming({ data, loading: false });
+      const ls = JSON.parse(localStorage.getItem('movies'));
+      if (ls !== null) {
+        const found = ls.some(
+          (movie) => !movie.releaseState.includes('Opening'),
+        );
+        if (found) return;
+        localStorage.setItem('movies', JSON.stringify(ls.concat(data)));
+      } else {
+        localStorage.setItem('movies', JSON.stringify(data));
+      }
+    });
 
-    getComingSoon();
+    getMoviesInTheaters().then((data) => {
+      setInTheaters({ data, loading: false });
+      const ls = JSON.parse(localStorage.getItem('movies'));
+      if (ls !== null) {
+        const found = ls.some(
+          (movie) => !movie.releaseState.includes('Opening'),
+        );
+        if (found) return;
+
+        localStorage.setItem('movies', JSON.stringify(ls.concat(data)));
+      } else {
+        localStorage.setItem('movies', JSON.stringify(data));
+      }
+    });
   }, []);
 
   return (
@@ -49,6 +62,15 @@ const App = () => {
         type="carousel"
         data={upcoming.data}
         loading={upcoming.loading}
+      />
+
+      <Section
+        id="carousel-intheaters"
+        title="In theaters"
+        subtitle="Showtimes near you"
+        type="carousel"
+        data={inTheaters.data}
+        loading={inTheaters.loading}
       />
     </div>
   );
