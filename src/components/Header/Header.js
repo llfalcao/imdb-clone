@@ -49,7 +49,7 @@ const Header = ({ user, onSignOut }) => {
             <Button type="button" variant="text" value="Sign out" />
           </Link>
         ) : (
-          <Link to="/imdb-clone/sign-in">
+          <Link to={'/imdb-clone/sign-in'}>
             <Button type="button" variant="text" value="Sign in" />
           </Link>
         )}

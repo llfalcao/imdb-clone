@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import hero from '../../assets/hero';
 import * as S from './styles';
 
-const SLIDE_DURATION = 500;
+const SLIDE_DURATION = 7000;
 
 const Hero = () => {
   const [slide, setSlide] = useState({ current: 0, pause: false });
