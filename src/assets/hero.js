@@ -1,5 +1,5 @@
-const imgPath = '/img/hero/main';
-const coverPath = '/img/hero/cover';
+const imgPath = '/imdb-clone/img/hero/main';
+const coverPath = '/imdb-clone/img/hero/cover';
 
 const hero = [
   {
