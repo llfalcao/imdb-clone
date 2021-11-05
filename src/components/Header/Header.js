@@ -35,7 +35,7 @@ const Header = ({ user, onSignIn, onSignOut }) => {
           </S.DrawerContainer>
         ) : null}
         <div className="header-logo">
-          <Link to="/imdb-clone">
+          <Link to="/">
             <img src="/img/logo.png" alt="IMDc logo" />
           </Link>
         </div>
@@ -45,7 +45,7 @@ const Header = ({ user, onSignIn, onSignOut }) => {
         </Link>
 
         {user.didAuth ? (
-          <Link to="/imdb-clone" onClick={onSignOut}>
+          <Link to="/" onClick={onSignOut}>
             <Button type="button" variant="text" value="Sign out" />
           </Link>
         ) : (
