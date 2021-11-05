@@ -3,21 +3,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import App from './App';
 import Header from './components/Header';
 import Watchlist from './pages/Watchlist';
-import { signInAsGuest, signOutUser } from './firebase';
+import SignIn from './pages/SignIn';
+import { signOutUser } from './firebase';
 
 const Routes = () => {
-  const [user, setUser] = useState({ didAuth: false });
-
-  useEffect(() => {
-    if (localStorage.didAuth) {
-      setUser({ didAuth: true });
-    }
-  }, []);
-
-  function onSignIn() {
-    signInAsGuest();
-    setUser({ didAuth: true });
-  }
+  const [user, setUser] = useState({
+    didAuth: false,
+  });
 
   function onSignOut() {
     signOutUser();
@@ -26,10 +18,11 @@ const Routes = () => {
 
   return (
     <Router>
-      <Header user={user} onSignIn={onSignIn} onSignOut={onSignOut} />
+      <Header user={user} onSignOut={onSignOut} />
       <Switch>
         <Route exact path="/imdb-clone" component={App}></Route>
-        <Route path="/imdb-clone/watchlist" component={Watchlist}></Route>
+        <Route exact path="/imdb-clone/watchlist" component={Watchlist}></Route>
+        <Route exact path="/imdb-clone/sign-in" component={SignIn}></Route>
       </Switch>
     </Router>
   );

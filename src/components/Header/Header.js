@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '../Button';
 import * as S from './styles';
 
-const Header = ({ user, onSignIn, onSignOut }) => {
+const Header = ({ user, onSignOut }) => {
   const [drawer, setDrawer] = useState(false);
 
   function toggleDrawer(e) {
@@ -35,26 +35,23 @@ const Header = ({ user, onSignIn, onSignOut }) => {
           </S.DrawerContainer>
         ) : null}
         <div className="header-logo">
-          <Link to="/">
+          <Link to="/imdb-clone">
             <img src="/imdb-clone/img/logo.png" alt="IMDc logo" />
           </Link>
         </div>
         <Button type="button" variant="icon" icon="search" />
-        <Link to={user.didAuth ? '/imdb-clone/watchlist' : '/'}>
+        <Link to={'/imdb-clone/watchlist'}>
           <Button type="button" variant="text" value="Watchlist" />
         </Link>
 
         {user.didAuth ? (
-          <Link to="/" onClick={onSignOut}>
+          <Link to="/imdb-clone" onClick={onSignOut}>
             <Button type="button" variant="text" value="Sign out" />
           </Link>
         ) : (
-          <Button
-            type="button"
-            variant="text"
-            value="Sign in"
-            onClick={onSignIn}
-          />
+          <Link to="/imdb-clone/sign-in">
+            <Button type="button" variant="text" value="Sign in" />
+          </Link>
         )}
       </S.Header>
     </S.Wrapper>
