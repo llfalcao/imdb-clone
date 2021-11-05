@@ -36,7 +36,7 @@ const Header = ({ user, onSignIn, onSignOut }) => {
         ) : null}
         <div className="header-logo">
           <Link to="/">
-            <img src="/img/logo.png" alt="IMDc logo" />
+            <img src="/imdb-clone/img/logo.png" alt="IMDc logo" />
           </Link>
         </div>
         <Button type="button" variant="icon" icon="search" />
