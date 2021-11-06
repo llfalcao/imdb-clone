@@ -1,6 +1,6 @@
-# IMDc
+# IMD(c)
 
-Layout based on [IMDb](https://www.imdb.com)'s, with a couple carousels, navigation drawer and a Watchlist feature, connected to Google Firebase.
+Layout based on [IMDb](https://www.imdb.com)'s, with a couple of carousels, navigation drawer and a Watchlist feature, connected to Google Firebase.
 
 Link: https://llfalcao.github.io/imdb-clone
 
