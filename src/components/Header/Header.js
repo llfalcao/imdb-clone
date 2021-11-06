@@ -1,10 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
+import Drawer from '../Drawer';
 import * as S from './styles';
 
 const Header = ({ user, onSignOut }) => {
   const [drawer, setDrawer] = useState(false);
+
+  useEffect(() => {
+    const body = document.body;
+    if (body.style.overflowY === 'hidden' || body.style.overflowY === '') {
+      body.style.overflowY = 'scroll';
+    } else {
+      body.style.overflowY = 'hidden';
+    }
+  }, [drawer]);
 
   function toggleDrawer(e) {
     if (e.target.classList.contains('drawer')) return;
@@ -20,25 +30,14 @@ const Header = ({ user, onSignOut }) => {
           icon="menu"
           onClick={toggleDrawer}
         />
-        {drawer ? (
-          <S.DrawerContainer onClick={toggleDrawer}>
-            <S.Drawer className="drawer">
-              <S.DrawerHeader className="drawer">
-                <Button
-                  type="button"
-                  variant="icon"
-                  icon="close"
-                  onClick={toggleDrawer}
-                />
-              </S.DrawerHeader>
-            </S.Drawer>
-          </S.DrawerContainer>
-        ) : null}
+        {drawer ? <Drawer toggleDrawer={toggleDrawer} /> : null}
+
         <div className="header-logo">
           <Link to="/imdb-clone">
             <img src="/imdb-clone/img/logo.png" alt="IMDc logo" />
           </Link>
         </div>
+
         <Button type="button" variant="icon" icon="search" />
         <Link to={'/imdb-clone/watchlist'}>
           <Button type="button" variant="text" value="Watchlist" />
