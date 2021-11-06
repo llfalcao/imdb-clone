@@ -41,7 +41,7 @@ const Hero = () => {
   return (
     <S.Wrapper>
       <S.HeroContainer onMouseEnter={resetTimer} onMouseLeave={restartTimer}>
-        <Link to="/">
+        <Link to="/imdb-clone">
           <S.Image>
             <img
               src={hero[slide.current].image}

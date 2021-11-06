@@ -1,22 +1,31 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInAnonymously,
+  signInWithPopup,
+} from '@firebase/auth';
 import { useHistory } from 'react-router';
-import { signInAsGuest } from '../../firebase';
 import * as S from './styles';
 
-const SignIn = ({ handleSignIn, onSignIn }) => {
+const SignIn = ({ onSignIn }) => {
   const history = useHistory([]);
 
-  function signInGuest() {
-    signInAsGuest();
-    localStorage.setItem('didAuth', 'true');
-    history.push('/imdb-clone', { isSignedIn: true });
-    onSignIn();
+  function signInAsGuest() {
+    const auth = getAuth();
+    signInAnonymously(auth).then(() => {
+      localStorage.setItem('didAuth', 'true');
+      history.push('/imdb-clone', { isSignedIn: true });
+      onSignIn();
+    });
   }
 
   async function signInGoogle() {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(getAuth(), provider)
-      .then(() => onSignIn())
+      .then(() => {
+        history.push('/imdb-clone', { isSignedIn: true });
+        onSignIn();
+      })
       .catch((error) => console.error(error));
   }
 
@@ -27,14 +36,14 @@ const SignIn = ({ handleSignIn, onSignIn }) => {
         <S.SignInBtn
           type="button"
           variant="text"
-          value="Sign in with Google"
+          value="Sign in using Google"
           onClick={signInGoogle}
         />
         <S.SignInBtn
           type="button"
           variant="text"
           value="Sign in as Guest"
-          onClick={signInGuest}
+          onClick={signInAsGuest}
         />
       </S.Form>
     </S.Wrapper>

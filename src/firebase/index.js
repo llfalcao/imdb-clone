@@ -41,12 +41,6 @@ async function removeMovie(user, id) {
   }
 }
 
-// Signs-in as guest
-function signInAsGuest() {
-  const auth = getAuth();
-  signInAnonymously(auth);
-}
-
 // Signs-out of Firebase
 function signOutUser() {
   signOut(getAuth()).then(() => localStorage.removeItem('auth'));
@@ -59,11 +53,4 @@ async function storeWatchlist(uid, watchlist) {
   });
 }
 
-export {
-  signInAsGuest,
-  signOutUser,
-  storeWatchlist,
-  getWatchlist,
-  storeMovie,
-  removeMovie,
-};
+export { signOutUser, storeWatchlist, getWatchlist, storeMovie, removeMovie };
