@@ -10,7 +10,7 @@ const Watchlist = () => {
 
   useEffect(() => {
     const user = getAuth().currentUser;
-    if (user === undefined || user === null) return;
+    if (!user) return;
 
     async function fetchAPI(id) {
       let response = await fetch(

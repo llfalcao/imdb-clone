@@ -43,7 +43,7 @@ async function removeMovie(user, id) {
 
 // Signs-out of Firebase
 function signOutUser() {
-  signOut(getAuth()).then(() => localStorage.removeItem('auth'));
+  signOut(getAuth()).then(() => localStorage.removeItem('didAuth'));
 }
 
 // Saves the user watchlist
